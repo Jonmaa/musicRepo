@@ -1,68 +1,57 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import url('https://rsms.me/inter/inter.css');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer base {
+  html { 
+    font-family: 'InterVariable', 'Inter', system-ui, sans-serif;
   }
-  a:hover {
-    color: #747bff;
+
+  body {
+    @apply bg-black text-white antialiased;
+    letter-spacing: -0.02em;
   }
-  button {
-    background-color: #f9f9f9;
+
+  ::-webkit-scrollbar {
+    width: 12px;
   }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+}
+
+@layer components {
+  .btn-spotify {
+    @apply px-8 py-3 rounded-full font-bold text-sm tracking-wider transition-all duration-200 transform hover:scale-105 active:scale-95;
+  }
+  .btn-green {
+    @apply bg-[#1ed760] text-black hover:bg-[#1fdf64];
+  }
+  .btn-white {
+    @apply bg-white text-black hover:bg-gray-200;
+  }
+  .btn-outline {
+    @apply border border-white/30 text-white hover:bg-white/10;
+  }
+
+  .card-spotify {
+    @apply bg-[#181818] rounded-lg p-4 transition-all duration-300 hover:bg-[#282828] cursor-pointer group;
+  }
+
+  .truncate-text {
+    @apply overflow-hidden overflow-ellipsis whitespace-nowrap;
+  }
+}
+
+.bg-gradient-spotify {
+  background: linear-gradient(135deg, #450af5, #8e00c0);
 }
