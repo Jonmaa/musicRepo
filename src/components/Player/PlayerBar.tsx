@@ -22,59 +22,32 @@ export default function PlayerBar({ initialTrack }: PlayerBarProps) {
   const [currentTrack, setCurrentTrack] = useState<SpotifyTrack | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Canción por defecto (útil cuando la app abre sin nada seleccionado)
-  const defaultTrack: SpotifyTrack = {
-    id: "0VjIjW4GlUZAMYd2vXMi3b",
-    name: "Blinding Lights",
-    artists: [{ name: "The Weeknd" }],
-    album: {
-      name: "After Hours",
-      images: [
-        {
-          url: "https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5aeb36",
-          width: 300,
-          height: 300,
-        },
-      ],
-    },
-    preview_url:
-      "https://p.scdn.co/mp3-preview/83090a4db6899eaca689ae35f69126dbe65d94c9?cid=null",
-  };
-
-  // Detecta cuando llega una nueva canción desde SearchBar
+  // 🔥 Detecta nueva canción y reproduce automáticamente
   useEffect(() => {
-    if (initialTrack && initialTrack.preview_url) {
-      setCurrentTrack(initialTrack);
-      setIsPlaying(true);
-      setProgress(0);
-    } else if (!currentTrack) {
-      setCurrentTrack(defaultTrack);
+    if (!initialTrack) return;
+
+    if (!initialTrack.preview_url) {
+      alert(`"${initialTrack.name}" no tiene preview disponible`);
+      return;
     }
+
+    setCurrentTrack(initialTrack);
+    setIsPlaying(true);
+    setProgress(0);
   }, [initialTrack]);
 
-  // 🔥 Maneja cambios de canción (recarga obligatoria del audio)
+  // Reproduce o pausa cuando cambia currentTrack, isPlaying o volumen
   useEffect(() => {
     if (!audioRef.current || !currentTrack?.preview_url) return;
 
     audioRef.current.pause();
-    audioRef.current.load(); // ← IMPORTANTE: recarga el nuevo src
+    audioRef.current.load();
     audioRef.current.volume = volume / 100;
 
     if (isPlaying) {
       audioRef.current.play().catch(() => setIsPlaying(false));
     }
-  }, [currentTrack]);
-
-  // Reproduce/pausa cuando cambia isPlaying
-  useEffect(() => {
-    if (!audioRef.current || !currentTrack?.preview_url) return;
-
-    if (isPlaying) {
-      audioRef.current.play().catch(() => setIsPlaying(false));
-    } else {
-      audioRef.current.pause();
-    }
-  }, [isPlaying]);
+  }, [currentTrack, isPlaying, volume]);
 
   const togglePlay = () => setIsPlaying(!isPlaying);
 

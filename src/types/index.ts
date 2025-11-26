@@ -9,3 +9,14 @@ export interface SpotifyTrack {
   preview_url: string | null;
   uri?: string;
 }
+
+export interface Playlist {
+  id: string;
+  name: string;
+  images: { url: string }[];
+  tracks: { total: number };
+}
+
+export interface Props {
+  onPlay: (track: SpotifyTrack) => void;
+}
