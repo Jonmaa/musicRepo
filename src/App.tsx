@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import Login from "./pages/Login";
 import Sidebar from "./components/Sidebar";
-import { getTokenFromUrl, api, getCurrentUser } from "./lib/spotify";
+import SearchBar from "./components/Search/SearchBar";
+import PlayerBar from "./components/Player/PlayerBar";
+import { getTokenFromUrl, getCurrentUser } from "./lib/spotify";
+import type { SpotifyTrack } from "./types";
 
 function App() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [currentPlaying, setCurrentPlaying] = useState<SpotifyTrack | null>(null);
 
   useEffect(() => {
     const init = async () => {
@@ -25,6 +29,7 @@ function App() {
           const response = await getCurrentUser();
           setUser(response.data);
         } catch (err) {
+          console.error("Token inválido", err);
           localStorage.removeItem("spotify_token");
         }
       }
@@ -46,14 +51,15 @@ function App() {
   if (!user) return <Login />;
 
   return (
-    <div className="min-h-screen bg-black text-white flex">
+    <div className="min-h-screen bg-[#121212] text-white flex">
       <Sidebar user={user} />
-      <div className="flex-1 ml-64 p-8">
-        <h1 className="text-5xl font-bold mb-4">¡Bienvenido de vuelta!</h1>
-        <p className="text-2xl text-gray-300">
-          ¿Qué quieres escuchar hoy, {user.display_name?.split(" ")[0]}? 
-        </p>
+      <div className="flex-1 ml-60 pb-32">
+        <div className="p-8 pt-12">
+          <h1 className="text-5xl font-bold mb-10">Buscar</h1>
+          <SearchBar onPlay={(track) => setCurrentPlaying(track)} />
+        </div>
       </div>
+      <PlayerBar initialTrack={currentPlaying} />
     </div>
   );
 }

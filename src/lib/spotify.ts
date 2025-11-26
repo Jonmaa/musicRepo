@@ -9,6 +9,8 @@ const SCOPES = [
   "streaming",
   "user-read-email",
   "user-read-private",
+  "user-read-playback-state",          // ← OBLIGATORIO para search
+  "user-modify-playback-state",        // ← OBLIGATORIO para previews
   "user-library-read",
   "playlist-read-private",
   "user-follow-read",
