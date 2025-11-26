@@ -10,7 +10,7 @@
 - Reproductor siempre visible con controles completos (play/pause, progreso, volumen)  
 - Navegación con sidebar: Inicio · Buscar · Tus playlists  
 
-### Tecnologías usadas
+## Tecnologías usadas
 
 - **React + TypeScript** – Código moderno y tipado  
 - **Vite** – Build 
@@ -20,7 +20,7 @@
 - **Axios** – Peticiones HTTP  
 - **LocalStorage** – Persistencia del token  
 
-### Funcionalidades principales
+## Funcionalidades principales
 
 - Login seguro con tu cuenta Spotify  
 - Buscador en tiempo real (con debounce)  
@@ -30,7 +30,7 @@
 - Responsive completo (móvil + desktop)  
 - Diseño muy similar a Spotify (fuente, colores, hover play, etc.)
 
-### Cómo usarlo
+## Cómo usarlo
 
 1. Clona el repositorio  
 2. `npm install`  
