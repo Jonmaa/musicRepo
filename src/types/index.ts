@@ -7,16 +7,15 @@ export interface SpotifyTrack {
     images: { url: string; width?: number; height?: number }[];
   };
   preview_url: string | null;
+  duration_ms?: number;
   uri?: string;
 }
 
-export interface Playlist {
+export interface SpotifyPlaylist {
   id: string;
   name: string;
-  images: { url: string }[];
-  tracks: { total: number };
-}
-
-export interface Props {
-  onPlay: (track: SpotifyTrack) => void;
+  description: string;
+  images: { url: string; width?: number; height?: number }[];
+  owner: { display_name: string };
+  tracks: { total: number; href: string };
 }

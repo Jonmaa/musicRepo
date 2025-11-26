@@ -1,38 +1,42 @@
-// src/components/Sidebar.tsx
-import { Home, Search, ListMusic, Play } from "lucide-react";
-import { useState } from "react";
+import { Home, Search, ListMusic } from "lucide-react";
 
 interface Props {
   user: any;
   onNavigate: (view: "home" | "search" | "playlists") => void;
   activeView: "home" | "search" | "playlists";
+  onClearPlaylist?: () => void; // ← NUEVA PROP
 }
 
-export default function Sidebar({ user, onNavigate, activeView }: Props) {
+export default function Sidebar({ user, onNavigate, activeView, onClearPlaylist }: Props) {
   const menuItems = [
     { id: "home", label: "Inicio", icon: Home },
     { id: "search", label: "Buscar", icon: Search },
     { id: "playlists", label: "Tus playlists", icon: ListMusic },
   ];
 
+  const handleNavigate = (view: "home" | "search" | "playlists") => {
+    onClearPlaylist?.();    // ← LIMPIA LA PLAYLIST AL NAVEGAR
+    onNavigate(view);
+  };
+
   return (
     <div className="w-60 bg-black h-screen fixed left-0 top-0 flex flex-col">
-      {/* Logo */}
       <div className="p-6">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-[#1ed760] rounded-full flex items-center justify-center">
-            <Play size={20} className="text-black fill-black ml-1" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="black">
+              <path d="M8 5v14l11-7L8 5z" />
+            </svg>
           </div>
           <span className="text-xl font-bold">SpotyVibe</span>
         </div>
       </div>
 
-      {/* Navegación principal */}
       <nav className="px-3 space-y-1">
         {menuItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => onNavigate(item.id as any)}
+            onClick={() => handleNavigate(item.id as any)}
             className={`w-full flex items-center gap-4 px-3 py-3 rounded-md transition-all font-bold text-sm ${
               activeView === item.id
                 ? "text-white bg-[#282828]"
@@ -45,9 +49,6 @@ export default function Sidebar({ user, onNavigate, activeView }: Props) {
         ))}
       </nav>
 
-      <div className="mx-3 my-4 border-t border-white/10" />
-
-      {/* Footer usuario */}
       <div className="mt-auto p-4 border-t border-white/10">
         <div className="flex items-center gap-3">
           <img

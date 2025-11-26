@@ -15,7 +15,7 @@ export default function Login() {
             <Music size={80} className="text-black" />
           </div>
         </div>
-        <h1 className="text-6xl font-bold text-white mb-4">SpotyVibe</h1>
+        <h1 className="text-6xl font-bold text-white mb-4">MUSICREPO</h1>
         <p className="text-xl text-gray-300 mb-10">
           Tu música, tu vibe.
         </p>
