@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Login from "./pages/Login";
-import { getTokenFromUrl, api, getCurrentUser } from "./lib/spotify";
+import { getTokenFromUrl, getCurrentUser } from "./lib/spotify";
 
 function App() {
   const [user, setUser] = useState<any>(null);

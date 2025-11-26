@@ -1,4 +1,3 @@
-// src/lib/spotify.ts
 import axios from "axios";
 
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
@@ -16,7 +15,6 @@ const SCOPES = [
   "user-top-read",
 ].join(" ");
 
-// ← PKCE CORRECTO 2025 (esto es lo que arregla el 400)
 const generateCodeVerifier = (): string => {
   const array = new Uint8Array(96);
   crypto.getRandomValues(array);
