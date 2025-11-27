@@ -28,7 +28,7 @@ export default function Sidebar({ user, onNavigate, activeView, onClearPlaylist 
               <path d="M8 5v14l11-7L8 5z" />
             </svg>
           </div>
-          <span className="text-xl font-bold">SpotyVibe</span>
+          <span className="text-xl font-bold">MUSICREPO</span>
         </div>
       </div>
 

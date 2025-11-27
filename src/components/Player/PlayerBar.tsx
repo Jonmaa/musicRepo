@@ -22,7 +22,7 @@ export default function PlayerBar({ initialTrack }: PlayerBarProps) {
   const [currentTrack, setCurrentTrack] = useState<SpotifyTrack | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // 🔥 Detecta nueva canción y reproduce automáticamente
+  // Detecta nueva canción y reproduce automáticamente
   useEffect(() => {
     if (!initialTrack) return;
 
@@ -36,18 +36,26 @@ export default function PlayerBar({ initialTrack }: PlayerBarProps) {
     setProgress(0);
   }, [initialTrack]);
 
-  // Reproduce o pausa cuando cambia currentTrack, isPlaying o volumen
+  // Reproduce o pausa cuando cambia currentTrack o isPlaying
   useEffect(() => {
     if (!audioRef.current || !currentTrack?.preview_url) return;
 
     audioRef.current.pause();
     audioRef.current.load();
-    audioRef.current.volume = volume / 100;
 
     if (isPlaying) {
       audioRef.current.play().catch(() => setIsPlaying(false));
     }
-  }, [currentTrack, isPlaying, volume]);
+  }, [currentTrack, isPlaying]); 
+
+  // Actualiza el volumen cuando cambia
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume / 100;
+    }
+  }, [volume]); 
+
+
 
   const togglePlay = () => setIsPlaying(!isPlaying);
 
@@ -156,21 +164,35 @@ export default function PlayerBar({ initialTrack }: PlayerBarProps) {
           {/* Derecha - Volumen */}
           <div className="flex items-center gap-3 w-80 justify-end">
             <Volume2 size={20} className="text-gray-400" />
-            <div className="w-24 h-1 bg-white/20 rounded-full relative overflow-hidden">
+                        
+            <div className="relative w-32 h-1 bg-white/20 rounded-full">
+              {/* Input invisible */}
               <input
                 type="range"
                 min="0"
                 max="100"
                 value={volume}
                 onChange={(e) => setVolume(Number(e.target.value))}
-                className="absolute inset-0 opacity-0 cursor-pointer"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
               />
+          
+              {/* Barra rellena */}
               <div
                 className="absolute top-0 left-0 h-full bg-white rounded-full"
                 style={{ width: `${volume}%` }}
               />
+          
+              {/* 🔥 Círculo del slider */}
+              <div
+                className="absolute top-1/2 w-4 h-4 bg-white rounded-full shadow-lg"
+                style={{
+                  left: `${volume}%`,
+                  transform: "translate(-50%, -50%)",
+                }}
+              />
             </div>
           </div>
+
         </div>
       </div>
     </>

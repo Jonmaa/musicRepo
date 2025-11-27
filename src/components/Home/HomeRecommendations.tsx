@@ -32,7 +32,7 @@ const featuredTracks: SpotifyTrack[] = [
     artists: [{ name: "Billie Eilish" }],
     album: {
       name: "WHEN WE ALL FALL ASLEEP...",
-      images: [{ url: "https://i.scdn.co/image/ab67616d0000b27350a3147b4edd7701df4cfe59" }],
+      images: [{ url: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.albumoftheyear.org%2Falbum%2F137995-when-we-all-fall-asleep-where-do-we-go.jpg&f=1&nofb=1&ipt=c2244d07f5464ee239ff4be04a7a4f33af4be8835c062f28cac528887f9f3522" }],
     },
     preview_url: "https://p.scdn.co/mp3-preview/2fxmhks0bKna65hJk1fG3b_3b7e8f9a2b3c4d5e6f7g8h9i0j1k2l3m4n5o?cid=null",
   },
@@ -42,7 +42,7 @@ const featuredTracks: SpotifyTrack[] = [
     artists: [{ name: "Dua Lipa" }],
     album: {
       name: "Future Nostalgia",
-      images: [{ url: "https://i.scdn.co/image/ab67616d0000b273bd26ede1ae6861c6f85ec79f" }],
+      images: [{ url: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.wonderlandmagazine.com%2Fuploads%2F2020%2F03%2FDUA_LIPA_FUTURE_NOSTALGIA_ALBUM_ARTWORK_200117.jpg&f=1&nofb=1&ipt=4b124423d0160447b97d28c17514f9043ac3e3c7785293cda848f3296d644d14" }],
     },
     preview_url: "https://p.scdn.co/mp3-preview/5nNvuor5vXbktQCmoB5J4f_5e87b2e6b2f8e8f8e8f8e8f8e8f8e8f8e8f8?cid=null",
   },
@@ -52,7 +52,7 @@ const featuredTracks: SpotifyTrack[] = [
     artists: [{ name: "The Kid LAROI" }, { name: "Justin Bieber" }],
     album: {
       name: "Stay",
-      images: [{ url: "https://i.scdn.co/image/ab67616d0000b2738f3b5a5f6f7c2d8d9e0a1b2c" }],
+      images: [{ url: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fis1-ssl.mzstatic.com%2Fimage%2Fthumb%2FMusic125%2Fv4%2Fe8%2Feb%2Fcc%2Fe8ebcc8d-6293-6e7f-7cc5-defa2bdbd4bd%2F886449399895.jpg%2F1200x1200bf-60.jpg&f=1&nofb=1&ipt=be685784f437c075473fd4b63787382f437b146179790aba6c6f89e0d868e4d4" }],
     },
     preview_url: "https://p.scdn.co/mp3-preview/6f6f5e4d3c2b1a0987654321fedcba9876543210?cid=null",
   },
@@ -62,7 +62,7 @@ const featuredTracks: SpotifyTrack[] = [
     artists: [{ name: "Harry Styles" }],
     album: {
       name: "Harry's House",
-      images: [{ url: "https://i.scdn.co/image/ab67616d0000b273b5d4b4d4b4d4b4d4b4d4b4d4" }],
+      images: [{ url: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.pitchfork.com%2Fphotos%2F623b686c6597466fa9d6e32d%2Fmaster%2Fw_1280%252Cc_limit%2FHarry-Styles-Harrys-House.jpeg&f=1&nofb=1&ipt=1603ec2a9918ea4da0e188bcb9e7267d8701ed65053ebedf7f0ac1dfb3c318cb" }],
     },
     preview_url: "https://p.scdn.co/mp3-preview/5f6e7d8c9b0a1f2e3d4c5b6a7f8e9d0c1b2a3f4e?cid=null",
   },
