@@ -4,7 +4,7 @@ import { api } from "../../lib/spotify";
 import type { SpotifyTrack } from "../../types";
 
 interface Props {
-  onPlay: (track: SpotifyTrack) => void;
+  onPlay: (track: SpotifyTrack, list: SpotifyTrack[]) => void;
 }
 
 export default function SearchBar({ onPlay }: Props) {
@@ -88,7 +88,7 @@ export default function SearchBar({ onPlay }: Props) {
                 key={track.id}
                 onClick={() => {
                   if (track.preview_url) {
-                    onPlay(track);
+                    onPlay(track, results);
                     setShowResults(false);
                   } else {
                     // Alternativa cuando no hay preview_url

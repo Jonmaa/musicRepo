@@ -4,7 +4,7 @@ import Sidebar from "./components/Sidebar";
 import SearchBar from "./components/Search/SearchBar";
 import PlaylistsGrid from "./components/Playlist/PlaylistsGrid";
 import PlaylistDetail from "./components/Playlist/PlaylistDetail";
-import HomeRecommendations, { featuredTracks } from "./components/Home/HomeRecommendations";
+import HomeRecommendations from "./components/Home/HomeRecommendations";
 import PlayerBar from "./components/Player/PlayerBar";
 import { getTokenFromUrl, getCurrentUser } from "./lib/spotify";
 import type { SpotifyTrack, SpotifyPlaylist } from "./types";
@@ -12,60 +12,35 @@ import type { SpotifyTrack, SpotifyPlaylist } from "./types";
 function App() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-
-  // 🎵 Estado global del reproductor
-  const [trackList] = useState<SpotifyTrack[]>(featuredTracks);
-  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
-
+  const [currentPlaying, setCurrentPlaying] = useState<SpotifyTrack | null>(null);
+  const [currentList, setCurrentList] = useState<SpotifyTrack[]>([]);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [activeView, setActiveView] = useState<"home" | "search" | "playlists">("home");
   const [selectedPlaylist, setSelectedPlaylist] = useState<SpotifyPlaylist | null>(null);
 
-  // 🔄 Inicialización de usuario
   useEffect(() => {
     const init = async () => {
       setLoading(true);
-
       if (window.location.search.includes("code=")) {
         const token = await getTokenFromUrl();
         if (token) {
-          window.location.href = "/";
+          window.location.href = "http://127.0.0.1:5173/";
           return;
         }
       }
-
       const savedToken = localStorage.getItem("spotify_token");
       if (savedToken) {
         try {
           const response = await getCurrentUser();
           setUser(response.data);
-        } catch {
+        } catch (err) {
           localStorage.removeItem("spotify_token");
         }
       }
-
       setLoading(false);
     };
-
     init();
   }, []);
-
-  // 🔊 Recibe evento al clicar en una canción
-  const handlePlay = (track: SpotifyTrack) => {
-    const index = trackList.findIndex((t) => t.id === track.id);
-    setCurrentIndex(index);
-  };
-
-  // ⏭ Siguiente canción
-  const handleNext = () => {
-    if (currentIndex === null) return;
-    setCurrentIndex((currentIndex + 1) % trackList.length);
-  };
-
-  // ⏮ Canción anterior
-  const handlePrev = () => {
-    if (currentIndex === null) return;
-    setCurrentIndex((currentIndex - 1 + trackList.length) % trackList.length);
-  };
 
   if (loading)
     return (
@@ -73,7 +48,6 @@ function App() {
         Cargando...
       </div>
     );
-
   if (!user) return <Login />;
 
   return (
@@ -87,33 +61,63 @@ function App() {
 
       <div className="flex-1 ml-60 pb-32 overflow-y-auto">
         {activeView === "home" && (
-          <HomeRecommendations onPlay={handlePlay} />
+          <HomeRecommendations
+            onPlay={(track, list) => {
+              setCurrentPlaying(track);
+              setCurrentList(list);
+              const index = list.findIndex((t) => t.id === track.id);
+              setCurrentIndex(index >= 0 ? index : 0);
+            }}
+          />
         )}
 
         {activeView === "search" && !selectedPlaylist && (
           <div className="p-8 pt-20">
             <h1 className="text-5xl font-bold mb-12">Buscar</h1>
-            <SearchBar onPlay={(t) => handlePlay(t)} />
+            <SearchBar
+              onPlay={(track, list) => {
+                setCurrentPlaying(track);
+                setCurrentList(list);
+                const index = list.findIndex((t) => t.id === track.id);
+                setCurrentIndex(index >= 0 ? index : 0);
+              }}
+            />
           </div>
         )}
 
         {activeView === "playlists" && !selectedPlaylist && (
-          <PlaylistsGrid onSelectPlaylist={setSelectedPlaylist} />
+          <PlaylistsGrid
+            onSelectPlaylist={(playlist) => {
+              setSelectedPlaylist(playlist);
+              const list = playlist.tracks?.items?.map((t: any) => t.track) ?? [];
+              setCurrentList(list);
+              setCurrentIndex(0);
+            }}
+          />
         )}
 
         {selectedPlaylist && (
           <PlaylistDetail
             playlist={selectedPlaylist}
             onBack={() => setSelectedPlaylist(null)}
-            onPlay={(t) => handlePlay(t)}
+            onPlay={(track) => {
+              const list = selectedPlaylist.tracks?.items?.map((t: any) => t.track) ?? [];
+              setCurrentList(list);
+              const index = list.findIndex((t) => t.id === track.id);
+              setCurrentPlaying(track);
+              setCurrentIndex(index >= 0 ? index : 0);
+            }}
           />
         )}
       </div>
 
       <PlayerBar
-        track={currentIndex !== null ? trackList[currentIndex] : null}
-        onNext={handleNext}
-        onPrev={handlePrev}
+        trackList={currentList}
+        currentIndex={currentIndex}
+        onTrackChange={(track, index) => {
+          setCurrentPlaying(track);
+          setCurrentIndex(index);
+        }}
       />
     </div>
   );

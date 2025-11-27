@@ -6,7 +6,7 @@ import type { SpotifyTrack, SpotifyPlaylist } from "../../types";
 interface Props {
   playlist: SpotifyPlaylist;
   onBack: () => void;
-  onPlay: (track: SpotifyTrack) => void;
+  onPlay: (track: SpotifyTrack, list: SpotifyTrack[]) => void;
 }
 
 export default function PlaylistDetail({ playlist, onBack, onPlay }: Props) {
@@ -90,7 +90,7 @@ export default function PlaylistDetail({ playlist, onBack, onPlay }: Props) {
             tracks.map((track, index) => (
               <button
                 key={track.id}
-                onClick={() => track.preview_url && onPlay(track)}
+                onClick={() => track.preview_url && onPlay(track, tracks)} // <- pasamos lista completa
                 className={`w-full p-3 rounded transition group grid grid-cols-12 items-center text-left ${
                   track.preview_url ? "hover:bg-white/10 cursor-pointer" : "opacity-60 cursor-not-allowed"
                 }`}
@@ -114,8 +114,7 @@ export default function PlaylistDetail({ playlist, onBack, onPlay }: Props) {
                   {Math.floor((track.duration_ms || 0) / 60000)}:
                   {String(Math.floor(((track.duration_ms || 0) % 60000) / 1000)).padStart(2, "0")}
                 </div>
-
-                {/* Botón play solo si tiene preview */}
+              
                 {track.preview_url && (
                   <div className="opacity-0 group-hover:opacity-100 transition">
                     <div className="w-10 h-10 bg-[#1ed760] rounded-full flex items-center justify-center">
@@ -125,6 +124,7 @@ export default function PlaylistDetail({ playlist, onBack, onPlay }: Props) {
                 )}
               </button>
             ))}
+
         </div>
       </div>
     </div>
